@@ -1,10 +1,8 @@
-# Bitcoin Clicker
+# MFCoin Clicker
 
 This repository contains the source code of the game **Bitcoin Clicker**.
 
 You can play the current **stable** version here: [Play now!](https://julianyaman.github.io/bitcoin-clicker/index.html)
-
-## Changelog - [here](https://github.com/julianYaman/bitcoin-clicker/blob/master/CHANGELOG.md)
 
 ## Contributing
 

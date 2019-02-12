@@ -1,107 +1,107 @@
-var bitcoins = 0
-var bitcoinRate = 0
+var mfcoins = 0
+var mfcoinRate = 0
 
 // Every item in the game
 // TODO: items should be part of the Game variable
 var items = [
   {
     "name": "item_oldCalculator",
-    "price": "0.0000001"
+    "price": "100"
   },
   {
     "name": "item_oldCpu",
-    "price": "0.00000125"
-  },
-  {
-    "name": "item_oldComputerFromGrandpa",
-    "price": "0.00003"
-  },
-  {
-    "name": "item_rapsberrypy",
-    "price": "0.00005"
-  },
-  {
-    "name": "item_smartphone",
-    "price": "0.0005"
-  },
-  {
-    "name": "item_middleClassPC",
-    "price": "0.0015"
-  },
-  {
-    "name": "item_cheapServer",
-    "price": "0.004"
-  },
-  {
-    "name": "item_gamingPC",
-    "price": "0.015"
-  },
-  {
-    "name": "item_cheapMiner",
-    "price": "0.05"
-  },
-  {
-    "name": "item_highEndUltraPC",
-    "price": "0.15"
-  },
-  {
-    "name": "item_bigMiner",
-    "price": "1.5"
-  },
-  {
-    "name": "item_miningFarm",
     "price": "250"
   },
   {
+    "name": "item_oldComputerFromGrandpa",
+    "price": "3750"
+  },
+  {
+    "name": "item_rapsberrypy",
+    "price": "5700"
+  },
+  {
+    "name": "item_smartphone",
+    "price": "9100"
+  },
+  {
+    "name": "item_middleClassPC",
+    "price": "17000"
+  },
+  {
+    "name": "item_cheapServer",
+    "price": "35000"
+  },
+  {
+    "name": "item_gamingPC",
+    "price": "78500"
+  },
+  {
+    "name": "item_cheapMiner",
+    "price": "179000"
+  },
+  {
+    "name": "item_highEndUltraPC",
+    "price": "350000"
+  },
+  {
+    "name": "item_bigMiner",
+    "price": "650000"
+  },
+  {
+    "name": "item_miningFarm",
+    "price": "850000"
+  },
+  {
     "name": "item_nasaPC",
-    "price": "5000"
+    "price": "1500000"
   },
   {
     "name": "item_quantumRig",
-    "price": "245000"
+    "price": "6500000"
   },
   {
     "name": "item_miningFarmSpace",
-    "price": "2000000"
+    "price": "25000000"
   },
   {
     "name": "item_miningFarmMoon",
-    "price": "75500000"
+    "price": "100000000"
   },
   {
-    "name": "item_bitcoinTimeMachine",
-    "price": "975000000"
+    "name": "item_mfcoinTimeMachine",
+    "price": "250000000"
   },
   {
     "name": "item_blackHolePoweredMiner",
-    "price": "750000000000"
+    "price": "7750000000"
   }
 ]
 
 // Rate is null (at the beginning)
 var bSec = null;
 
-// If there is no bitcoins Item in the localStorage, create one.
+// If there is no mfcoins Item in the localStorage, create one.
 // If there is one, do the other thing.
-if(localStorage.getItem("bitcoins") === null){
-  // Bitcoins are 0
-  bitcoins = 0
+if(localStorage.getItem("mfcoins") === null){
+  // mfcoins are 0
+  mfcoins = 0
 
   // Set the localStorage Item for the first time
-  localStorage.setItem("bitcoins", "0");
+  localStorage.setItem("mfcoins", "0");
 
-  // Write the current amount of Bitcoins on the page
-  $(".bitcoinAmount").text(bitcoins.toFixed(8))
+  // Write the current amount of mfcoins on the page
+  $(".mfcoinAmount").text(mfcoins.toFixed(0))
 
 }else{
 
-  // Get the amount of Bitcoins and parse them to a float number
-  bitcoins = parseFloat(localStorage.getItem("bitcoins"))
+  // Get the amount of mfcoins and parse them to a float number
+  mfcoins = parseFloat(localStorage.getItem("mfcoins"))
 
-  $(".bitcoinAmount").text("loading...")
+  $(".mfcoinAmount").text("loading...")
   $(".satoshiAmount").text("loading...")
 
-  let satoshis = bitcoins * 100000000;
+  let satoshis = mfcoins;
 
 }
 
@@ -175,7 +175,7 @@ Game.setPriceAtGameBeginning = function (element, price, itemAmount) {
   var calculation = (parseFloat(price) * Math.pow(multiplier, parseInt(itemAmount))).toFixed(8)
 
   // Showing the actual price
-  element.children()[2].textContent = calculation + " Bitcoins"
+  element.children()[2].textContent = calculation + " mfcoins"
 
   // Set the data-price attribute with the new price
   element.attr("data-price", calculation.toString())
@@ -208,10 +208,10 @@ Game.itemAction = function (id) {
 
 
 /**
- * Calculating the Bitcoins per Second - rate when the page was opened.
+ * Calculating the mfcoins per Second - rate when the page was opened.
  *
  */
-Game.setBitcoinPerSecondRateAtBeginning = function () {
+Game.setmfcoinPerSecondRateAtBeginning = function () {
 
   for(var i = 0; i < items.length; i++){
     if(localStorage.getItem(items[i].name) === null){
@@ -233,20 +233,20 @@ Game.setBitcoinPerSecondRateAtBeginning = function () {
         Game.setPriceAtGameBeginning($element, parseFloat(items[i].price), parseInt(itemAmount))
       }
 
-      // Getting the data-bits-per-sec attribute, needed for calculating the bitcoin/sec rate
+      // Getting the data-bits-per-sec attribute, needed for calculating the mfcoin/sec rate
       var bits_per_sec = $element.attr("data-bits-per-sec")
       itemAmount = parseInt(itemAmount)
 
       // The rate before
-      var before = bitcoinRate
+      var before = mfcoinRate
 
       // Calculating the rate
-      bitcoinRate = bitcoinRate + (itemAmount * bits_per_sec)
+      mfcoinRate = mfcoinRate + (itemAmount * bits_per_sec)
 
       // Logging the calculation in the console
-      console.log("i = " + i + " | B/sec before: " + before.toFixed(8) +
-        " - Calculation made: " + before.toFixed(8) + " + (" + itemAmount + " * " + bits_per_sec + ") = " +  bitcoinRate.toFixed(8) +
-        " | New B/sec at " + bitcoinRate.toFixed(8))
+      console.log("i = " + i + " | MFC/sec before: " + before.toFixed(0) +
+        " - Calculation made: " + before.toFixed(0) + " + (" + itemAmount + " * " + bits_per_sec + ") = " +  mfcoinRate.toFixed(0) +
+        " | New MFC/sec at " + mfcoinRate.toFixed(0))
     }
   }
 
@@ -255,30 +255,30 @@ Game.setBitcoinPerSecondRateAtBeginning = function () {
 
 
 /**
- * Function which sets a new "Bitcoin per Second" rate
+ * Function which sets a new "mfcoin per Second" rate
  *
- * @param rate - The number which must be added to the current Bitcoin per Second - rate
- * @returns {Number} - Returning the new Bitcoin per Second - rate
+ * @param rate - The number which must be added to the current mfcoin per Second - rate
+ * @returns {Number} - Returning the new mfcoin per Second - rate
  */
-Game.setNewBitcoinRate = function (rate) {
+Game.setNewmfcoinRate = function (rate) {
 
-  // Logging the new Bitcoin per second rate
-  console.log("setNewBitcoinRate -> New rate: " + (bitcoinRate + rate).toFixed(8) )
+  // Logging the new mfcoin per second rate
+  console.log("setNewmfcoinRate -> New rate: " + (mfcoinRate + rate).toFixed(8) )
 
   // Showing the new rate on the page
   // Rounding at specific values
-  if((bitcoinRate + rate) >= 1000000) {
-    $(".bSecRateNumber").text((bitcoinRate + rate).toFixed(0).optimizeNumber())
-  }else if((bitcoinRate + rate) >= 1000 ){
-    $(".bSecRateNumber").text((bitcoinRate + rate).toFixed(0))
-  }else if((bitcoinRate + rate) >= 1 ){
-    $(".bSecRateNumber").text((bitcoinRate + rate).toFixed(2))
+  if((mfcoinRate + rate) >= 1000000) {
+    $(".bSecRateNumber").text((mfcoinRate + rate).toFixed(0).optimizeNumber())
+  }else if((mfcoinRate + rate) >= 1000 ){
+    $(".bSecRateNumber").text((mfcoinRate + rate).toFixed(0))
+  }else if((mfcoinRate + rate) >= 1 ){
+    $(".bSecRateNumber").text((mfcoinRate + rate).toFixed(0))
   }else{
-    $(".bSecRateNumber").text((bitcoinRate + rate).toFixed(8))
+    $(".bSecRateNumber").text((mfcoinRate + rate).toFixed(0))
   }
 
   // Returning the new rate
-  return bitcoinRate = bitcoinRate + rate;
+  return mfcoinRate = mfcoinRate + rate;
 
 }
 
@@ -311,7 +311,7 @@ Game.setNewPrice = function()
         var calculation = (parseFloat(items[i].price) * Math.pow(multiplier, parseInt(itemAmount))).toFixed(8)
 
         // Showing the actual price
-        $element.children()[2].textContent = calculation + " Bitcoins"
+        $element.children()[2].textContent = calculation + " mfcoins"
 
         // Set the data-price attribute with the new price
         $element.attr("data-price", calculation.toString())
@@ -323,34 +323,34 @@ Game.setNewPrice = function()
 }
 
 /**
- * The function which adds new generated Bitcoins to the current Bitcoin amount.
+ * The function which adds new generated mfcoins to the current mfcoin amount.
  *
- * @param rate - The Bitcoin per second rate; Needed for adding the generated Bitcoins every second
+ * @param rate - The mfcoin per second rate; Needed for adding the generated mfcoins every second
  */
 Game.bSecFunction = function (rate) {
 
-  bitcoins = bitcoins + rate
+  mfcoins = mfcoins + rate
 
   // Show both values on the page
-  // Rounding the bitcoin number at specific set values
-  if(bitcoins > 1000000){
+  // Rounding the mfcoin number at specific set values
+  if(mfcoins > 1000000){
 
-    let bitcoinUnitNumber = bitcoins.optimizeNumber()
+    let mfcoinUnitNumber = mfcoins.optimizeNumber()
 
-    $(".bitcoinAmount").text(bitcoinUnitNumber)
-  }else if(bitcoins >= 1000){
-    $(".bitcoinAmount").text(bitcoins.toFixed(0))
-  }else if(bitcoins >= 1){
-    $(".bitcoinAmount").text(bitcoins.toFixed(2))
+    $(".mfcoinAmount").text(mfcoinUnitNumber)
+  }else if(mfcoins >= 1000){
+    $(".mfcoinAmount").text(mfcoins.toFixed(0))
+  }else if(mfcoins >= 1){
+    $(".mfcoinAmount").text(mfcoins.toFixed(0))
   }else{
-    $(".bitcoinAmount").text(bitcoins.toFixed(8))
+    $(".mfcoinAmount").text(mfcoins.toFixed(0))
   }
 
 
   // Rounding the satoshis amount at a specific value and optimize it for displaying on the screen.
-  var satoshis = bitcoins * 100000000;
+  var satoshis = mfcoins;
 
-  if(satoshis < 1000000) {
+  if(satoshis < 1) {
     $(".satoshiAmount").text(Math.round(satoshis))
   }else{
 
@@ -358,10 +358,10 @@ Game.bSecFunction = function (rate) {
     $(".satoshiAmount").text(satoshiUnitNumber)
   }
 
-  // Save bitcoin amount in the storage
-  localStorage.setItem("bitcoins", "" + bitcoins + "")
+  // Save mfcoin amount in the storage
+  localStorage.setItem("mfcoins", "" + mfcoins + "")
 
-  console.log("bSec -> B/sec at " + rate.toFixed(8))
+  console.log("mfcSec -> MFC/sec at " + rate.toFixed(0))
 
 }
 
@@ -385,7 +385,7 @@ Game.optimizeNumber = function () {
     // let test = this.toExponential(0).toString().replace("+", "").slice(2)
     // console.log(test)
 
-    var num = (this / ('1e'+(unit))).toFixed(2)
+    var num = (this / ('1e'+(unit))).toFixed(0)
 
     var unitname = Game.units[Math.floor(unit / 3) - 1]
 
@@ -403,7 +403,7 @@ String.prototype.optimizeNumber = Game.optimizeNumber
  */
 Game.resetGame = function () {
   Game.stopBsec()
-  localStorage.setItem("bitcoins", "0")
+  localStorage.setItem("mfcoins", "0")
   localStorage.clear()
   location.reload()
 }
@@ -415,12 +415,12 @@ Game.resetGame = function () {
  */
 
 
-// Calculates the Bitcoin/sec rate with the amount of every item multiplied with their given Bitcoins/second rate.
-Game.setBitcoinPerSecondRateAtBeginning()
+// Calculates the mfcoin/sec rate with the amount of every item multiplied with their given mfcoins/second rate.
+Game.setmfcoinPerSecondRateAtBeginning()
 
-// Stating the interval with the calculated Bitcoin/second rate.
+// Stating the interval with the calculated mfcoin/second rate.
 bSec = setInterval(function () {
-  Game.bSecFunction(bitcoinRate);
+  Game.bSecFunction(mfcoinRate);
 }, 1000)
 
 
@@ -430,46 +430,46 @@ $(document).ready(function () {
   // Write the version into the .version span element
   $(".version").text("Version " + Game.GameConst.VERSION)
 
-  // Write the bitcoin per second rate into the .bSecRateNumber span element
-  if(bitcoinRate >= 1000){
-    $(".bSecRateNumber").text(bitcoinRate.toFixed(0))
-  }else if(bitcoinRate >= 1 ){
-    $(".bSecRateNumber").text(bitcoinRate.toFixed(2))
+  // Write the mfcoin per second rate into the .bSecRateNumber span element
+  if(mfcoinRate >= 1000){
+    $(".bSecRateNumber").text(mfcoinRate.toFixed(0))
+  }else if(mfcoinRate >= 1 ){
+    $(".bSecRateNumber").text(mfcoinRate.toFixed(0))
   }else{
-    $(".bSecRateNumber").text(bitcoinRate.toFixed(8))
+    $(".bSecRateNumber").text(mfcoinRate.toFixed(0))
   }
 
 
-  // If clicked on the big Bitcoin
-  $(".bitcoin").click(function () {
+  // If clicked on the big mfcoin
+  $(".mfcoin").click(function () {
 
-    // Add 1^-8 Bitcoins (equal to 1 satoshi)
-    bitcoins = bitcoins + 0.00000001
+    // Add 1 mfcoins
+    mfcoins = mfcoins + 1
 
     // Show the new number on the page
-    if(bitcoins > 1000000){
+    if(mfcoins > 1000000){
 
-      let bitcoinUnitNumber = bitcoins.optimizeNumber()
-      $(".bitcoinAmount").text(bitcoinUnitNumber)
+      let mfcoinUnitNumber = mfcoins.optimizeNumber()
+      $(".mfcoinAmount").text(mfcoinUnitNumber)
 
-    }else if(bitcoins >= 1000){
-      $(".bitcoinAmount").text(bitcoins.toFixed(0))
-    }else if(bitcoins >= 1){
-      $(".bitcoinAmount").text(bitcoins.toFixed(2))
+    }else if(mfcoins >= 1000){
+      $(".mfcoinAmount").text(mfcoins.toFixed(0))
+    }else if(mfcoins >= 1){
+      $(".mfcoinAmount").text(mfcoins.toFixed(0))
     }else{
-      $(".bitcoinAmount").text(bitcoins.toFixed(8))
+      $(".mfcoinAmount").text(mfcoins.toFixed(0))
     }
 
-    if((bitcoins * 100000000) < 1000000) {
-      $(".satoshiAmount").text(Math.round((bitcoins * 100000000)))
+    if(mfcoins < 1000000) {
+      $(".satoshiAmount").text(Math.round(mfcoins))
     }else{
 
-      let satoshiUnitNumber = (bitcoins * 100000000).optimizeNumber()
+      let satoshiUnitNumber = mfcoins.optimizeNumber()
       $(".satoshiAmount").text(satoshiUnitNumber)
     }
 
-    // Save the new amount of Bitcoins in the localStorage storage
-    localStorage.setItem("bitcoins", "" + bitcoins + "")
+    // Save the new amount of mfcoins in the localStorage storage
+    localStorage.setItem("mfcoins", "" + mfcoins + "")
 
   });
 
@@ -486,7 +486,7 @@ $(document).ready(function () {
     var price = parseFloat($(this).attr("data-price"))
 
     // The b/sec attribute from the item as a float number
-    var bitcoinsPerSecond = parseFloat($(this).attr("data-bits-per-sec"))
+    var mfcoinsPerSecond = parseFloat($(this).attr("data-bits-per-sec"))
 
     // The element which shows how many of the item is existing
     var amountDisplay = $(this).children()[0]
@@ -494,40 +494,40 @@ $(document).ready(function () {
 
     var priceDisplay = $(this).children()[2]
 
-    // If you have enough Bitcoins, it´ll buy one item
-    if(parseFloat(bitcoins.toFixed(8)) >= price){
+    // If you have enough mfcoins, it´ll buy one item
+    if(parseFloat(mfcoins.toFixed(0)) >= price){
 
-      // Substract the price from the current Bitcoin number and set it to the bitcoins variable.
-      bitcoins = parseFloat(bitcoins.toFixed(8)) - price
+      // Substract the price from the current mfcoin number and set it to the mfcoins variable.
+      mfcoins = parseFloat(mfcoins.toFixed(0)) - price
 
-      // Save the new amount of Bitcoins in the localStorage storage
-      localStorage.setItem("bitcoins", "" + bitcoins + "")
+      // Save the new amount of mfcoins in the localStorage storage
+      localStorage.setItem("mfcoins", "" + mfcoins + "")
 
       // Changing amount number on the right of the item
       amountDisplayAmount = amountDisplayAmount + 1
       amountDisplay.textContent = amountDisplayAmount.toString()
 
-      // Changing the Bitcoins amount
-      // Rounding the Bitcoin number at specific values
-      if(bitcoins > 1e6){
+      // Changing the mfcoins amount
+      // Rounding the mfcoin number at specific values
+      if(mfcoins > 1e6){
 
-        let bitcoinUnitNumber = bitcoins.optimizeNumber()
-        $(".bitcoinAmount").text(bitcoinUnitNumber)
+        let mfcoinUnitNumber = mfcoins.optimizeNumber()
+        $(".mfcoinAmount").text(mfcoinUnitNumber)
 
-      }else if(bitcoins >= 1000){
-        $(".bitcoinAmount").text(bitcoins.toFixed(0))
-      }else if(bitcoins >= 1){
-        $(".bitcoinAmount").text(bitcoins.toFixed(2))
+      }else if(mfcoins >= 1000){
+        $(".mfcoinAmount").text(mfcoins.toFixed(0))
+      }else if(mfcoins >= 1){
+        $(".mfcoinAmount").text(mfcoins.toFixed(0))
       }else{
-        $(".bitcoinAmount").text(bitcoins.toFixed(8))
+        $(".mfcoinAmount").text(mfcoins.toFixed(0))
       }
 
       // Calculation the Satoshi amount
-      if((bitcoins * 100000000) < 1e6) {
-        $(".satoshiAmount").text(Math.round((bitcoins * 100000000)))
+      if(mfcoins < 1e6) {
+        $(".satoshiAmount").text(Math.round(mfcoins))
       }else{
 
-        let satoshiUnitNumber = (bitcoins * 100000000).optimizeNumber()
+        let satoshiUnitNumber = mfcoins.optimizeNumber()
         $(".satoshiAmount").text(satoshiUnitNumber)
 
       }
@@ -541,8 +541,8 @@ $(document).ready(function () {
       // Setting a new price and show it
       Game.setNewPrice()
 
-      // Saving the new calculated Bitcoin/second rate in a variable
-      var newRate = Game.setNewBitcoinRate(bitcoinsPerSecond)
+      // Saving the new calculated mfcoin/second rate in a variable
+      var newRate = Game.setNewmfcoinRate(mfcoinsPerSecond)
 
       // Restarting the interval with the new rate
       bSec = setInterval(function () {
@@ -560,6 +560,3 @@ $(document).ready(function () {
   })
 
 });
-
-
-
